@@ -15,6 +15,7 @@ HashTable.prototype.insert = function(k, v) {
     // initiate bucket to empty array
     this._storage.set(index, []);
   }
+  // set a temp var for bucket
   let bucket = this._storage.get(index);
   // Iterate through bucket
   for (let i = 0; i < bucket.length; i++) {
@@ -24,19 +25,18 @@ HashTable.prototype.insert = function(k, v) {
       return;
     }
   }
-  // in value should be a tuple, so push [k, v] to value
+  // Else if the key does not exist, add a new key value pair to bucket
   this._storage.get(index).push([k, v]); // storage[index].push([k, v])
 };
 
 // This method should take in a key and return a value
 HashTable.prototype.retrieve = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage.get(index); // bucket is an array of tuples
+  var bucket = this._storage.get(index); // Set temp var bucket
   // Iterate through the bucket
   for (let i = 0; i < bucket.length; i++) {
-    console.log('bucket[i]: ' + bucket[i]);
     // If tuple[0] equals k
-    if (bucket[i][0] === k) { // bu
+    if (bucket[i][0] === k) {
       // return tuples[1]
       return bucket[i][1];
     }
@@ -45,9 +45,20 @@ HashTable.prototype.retrieve = function(k) {
 
 // This method should remove the value at index that gets provided with key k
 HashTable.prototype.remove = function(k) {
+  // I - key
+  // O -
+
   var index = getIndexBelowMaxForKey(k, this._limit);
   // get the bucket at the index
   let bucket = this._storage.get(index);
+  // Iterate through the bucket
+  for (let i = 0; i < bucket.length; i++) {
+    // If tuple[0] equals key
+    if (bucket[i][0] === k) {
+      // delete the whole tuple at index
+      bucket.splice(i);
+    }
+  }
 };
 
 /*
